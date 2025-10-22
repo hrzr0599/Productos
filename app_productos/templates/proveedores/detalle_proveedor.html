@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block titulo %}{% endblock %}
+
+{% block contenido %}
+<article class="card">
+    <h2>{{ proveedor.nombre }}</h2>
+    <div class="card-content">
+        <p><strong>ID Proveedor:</strong> {{ proveedor.id_proveedor }}</p>
+        <p><strong>Email:</strong> {{ proveedor.email|default:"No especificado" }}</p>
+        <p><strong>Teléfono:</strong> {{ proveedor.telefono|default:"No especificado" }}</p>
+        <p><strong>Dirección:</strong> {{ proveedor.direccion|default:"No especificada" }}</p>
+    </div>
+
+    <div class="card-actions">
+        <a href="{% url 'app_productos:listar_proveedores' %}" class="btn btn-secondary">Volver</a>
+        <a href="{% url 'app_productos:editar_proveedor' proveedor.id_proveedor %}" class="btn btn-edit">Editar</a>
+        <a href="{% url 'app_productos:borrar_proveedor' proveedor.id_proveedor %}" class="btn btn-danger">Borrar</a>
+    </div>
+</article>
+{% endblock %}

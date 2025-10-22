@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block titulo %}{% endblock %}
+
+{% block contenido %}
+<article class="card">
+    <h2>{{ producto.nombre }}</h2>
+    <div class="card-content">
+        <p><strong>ID Producto:</strong> {{ producto.id_producto }}</p>
+        <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
+        <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+        <p><strong>Stock:</strong> {{ producto.stock }} unidades</p>
+        {% if producto.descripcion %}
+        <p><strong>Descripción:</strong></p>
+        <p class="description">{{ producto.descripcion }}</p>
+        {% endif %}
+        
+        {% if producto.imagen_url %}
+        <div class="product-image-container">
+            <img src="{{ producto.imagen_url }}" alt="Imagen de {{ producto.nombre }}" class="product-image">
+        </div>
+        {% endif %}
+        
+        <p><strong>ID Proveedor:</strong> <a href="{% url 'app_productos:detalle_proveedor' producto.proveedor.id_proveedor %}">{{ producto.proveedor.id_proveedor }}</a></p>
+    </div>
+
+    <div class="card-actions">
+        <a href="{% url 'app_productos:listar_productos' %}" class="btn btn-secondary">Volver</a>
+        <a href="{% url 'app_productos:editar_producto' producto.id_producto %}" class="btn btn-edit">Editar</a>
+        <a href="{% url 'app_productos:borrar_producto' producto.id_producto %}" class="btn btn-danger">Borrar</a>
+    </div>
+</article>
+{% endblock %}

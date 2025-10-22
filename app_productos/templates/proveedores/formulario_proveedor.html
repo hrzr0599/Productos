@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block titulo %}{% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <h2>{{ titulo }}</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="card-content">
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-message">{{ field.errors.0 }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="card-actions">
+            <a href="{% url 'app_productos:listar_proveedores' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

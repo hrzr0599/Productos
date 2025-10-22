@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block titulo %}{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Productos</h2>
+    <div>
+        <a href="{% url 'app_productos:crear_producto' %}" class="btn btn-primary">+ Nuevo Producto</a>
+        <a href="{% url 'app_productos:listar_proveedores' %}" class="btn btn-secondary">Ver Proveedores</a>
+    </div>
+</div>
+
+<div class="data-table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>ID Proveedor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.id_producto }}</td>
+                <td>
+                    {% if producto.imagen_url %}
+                    <img src="{{ producto.imagen_url }}" alt="Imagen de {{ producto.nombre }}" class="product-thumbnail">
+                    {% else %}
+                    <div class="product-thumbnail" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #999">Sin imagen</span>
+                    </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'app_productos:detalle_producto' producto.id_producto %}">
+                        {{ producto.nombre }}
+                    </a>
+                </td>
+                <td>{{ producto.descripcion|truncatechars:50|default:"-" }}</td>
+                <td>{{ producto.categoria }}</td>
+                <td>${{ producto.precio }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>
+                    <a href="{% url 'app_productos:detalle_proveedor' producto.proveedor.id_proveedor %}">
+                        {{ producto.proveedor.id_proveedor }}
+                    </a>
+                </td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{% url 'app_productos:detalle_producto' producto.id_producto %}" class="btn btn-sm btn-secondary">Detalles</a>
+                        <a href="{% url 'app_productos:editar_producto' producto.id_producto %}" class="btn btn-sm btn-edit">Editar</a>
+                        <a href="{% url 'app_productos:borrar_producto' producto.id_producto %}" class="btn btn-sm btn-danger">Borrar</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9">
+                    <div class="empty-message">No hay productos registrados.</div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

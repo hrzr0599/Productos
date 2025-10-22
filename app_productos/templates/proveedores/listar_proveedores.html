@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block titulo %}{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Proveedores</h2>
+    <div>
+        <a href="{% url 'app_productos:crear_proveedor' %}" class="btn btn-primary">+ Nuevo Proveedor</a>
+        <a href="{% url 'app_productos:listar_productos' %}" class="btn btn-secondary">Ver Productos</a>
+    </div>
+</div>
+
+<div class="data-table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proveedor in proveedores %}
+            <tr>
+                <td>{{ proveedor.id_proveedor }}</td>
+                <td>
+                    <a href="{% url 'app_productos:detalle_proveedor' proveedor.id_proveedor %}">
+                        {{ proveedor.nombre }}
+                    </a>
+                </td>
+                <td>{{ proveedor.email|default:"-" }}</td>
+                <td>{{ proveedor.telefono|default:"-" }}</td>
+                <td>{{ proveedor.direccion|default:"-" }}</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="{% url 'app_productos:detalle_proveedor' proveedor.id_proveedor %}" class="btn btn-sm btn-secondary">Detalles</a>
+                        <a href="{% url 'app_productos:editar_proveedor' proveedor.id_proveedor %}" class="btn btn-sm btn-edit">Editar</a>
+                        <a href="{% url 'app_productos:borrar_proveedor' proveedor.id_proveedor %}" class="btn btn-sm btn-danger">Borrar</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">
+                    <div class="empty-message">No hay proveedores registrados.</div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
